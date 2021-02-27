@@ -1,0 +1,20 @@
+{
+  "name": "editmode-standalone",
+  "version": "1.0.0",
+  "author": "Jen Villaganas",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "watch": "webpack --watch",
+    "start": "webpack serve --open",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  },
+  "devDependencies": {
+    "webpack": "^5.24.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
