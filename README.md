@@ -30,3 +30,4 @@ Editmode allows you to turn plain text in your website into easily inline-editab
 
 ### Todos
 - Parse variable values
+- Caching
