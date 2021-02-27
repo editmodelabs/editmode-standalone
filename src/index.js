@@ -59,9 +59,10 @@ const EditmodeStandAlone = {
     const chunkProjectId = el.getAttribute('project-id')
     const urlParams = new URLSearchParams({
       collection_identifier: collectionId,
+      projectId: chunkProjectId || this.projectId
     });
 
-    api.get(`/chunks/?${urlParams}&projectId=${chunkProjectId || this.projectId}&`).then(res => {
+    api.get(`/chunks/?${urlParams}`).then(res => {
       const chunks = res.data.chunks
 
       Component.renderCollection(el, chunks)

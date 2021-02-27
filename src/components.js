@@ -18,7 +18,7 @@ const Component = {
     }
 
     if (chunk.chunk_type == 'image') {
-      el.src = chunk.content
+      el.src = chunk.content || "https://editmode.com/upload.png"
     } else {
       el.innerHTML = chunk.content
     }
@@ -34,13 +34,15 @@ const Component = {
       collectionContainer.setAttribute('class', `${containerClass} chunks-collection-wrapper`)
       collectionContainer.dataset.chunkCollectionIdentifier = collectionItems[0].collection.identifier
 
-      // We add hidden item to every collection so we can use this el as template for a new collection item 
-
       collectionItems.forEach(collectionItem => {
         const itemWrapper = this.createCollectionItem(el, collectionItem)
         collectionContainer.appendChild(itemWrapper)
       })
 
+      // We add hidden item to every collection so we can use this el as template for a new collection item 
+      const dummyItem = this.createCollectionItem(el, collectionItems[0], true)
+
+      collectionContainer.appendChild(dummyItem)
       el.replaceWith(collectionContainer)
     } else {
       const emptyCollectionEl = document.createElement('div')
@@ -51,22 +53,32 @@ const Component = {
     }
   },
 
-  createCollectionItem: function(el, item) {
+  createCollectionItem: function(el, item, dummy = false) {
     let template = el.innerHTML
     const fields = el.querySelectorAll("[field-id]")
     const itemWrapper = document.createElement('div')
     const itemClass = el.getAttribute('itemClass') || ""
+
+    itemWrapper.setAttribute('class', itemClass)
     
-    itemWrapper.setAttribute('class', `${itemClass} chunks-collection-item--wrapper`)
+    if (dummy) {
+      // Info: Line 42
+      itemWrapper.classList.add("chunks-hide")
+      itemWrapper.classList.add("chunks-col-placeholder-wrapper")
+    }else{
+      itemWrapper.classList.add("chunks-collection-item--wrapper")
+    }
 
     const fieldChunks = item.content
 
     fields.forEach(fieldTemplate => {
       const fieldChunkData = fieldChunks.find(fieldChunk => fieldTemplate.getAttribute('field-id') === fieldChunk.custom_field_identifier || fieldTemplate.getAttribute('field-id') === fieldChunk.custom_field_name)
 
+      if (dummy) fieldChunkData.content = "" // Info: Line 42
+
       const cloneFieldElement = fieldTemplate.cloneNode(true)
 
-      const newComponent = this.renderChunk(cloneFieldElement, fieldChunkData, item)
+      const newComponent = this.renderChunk(cloneFieldElement, fieldChunkData, item, dummy)
       template = template.replace(fieldTemplate.outerHTML, newComponent.outerHTML)
     })
 
