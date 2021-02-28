@@ -35,6 +35,8 @@ Editmode allows you to turn plain text in your website into easily inline-editab
 </collection>
 ```
 
+### Demo
+[Open in Repl.it](https://repl.it/@jengkarlong/EditmodeStandAlone-Example)
 
 ### Todos
 - Parse variable values
