@@ -6,8 +6,17 @@ const EditmodeStandAlone = {
 
   // Initialize
   start: async function () {
-    await domReady()
+    console.log('Discovering contents...')
 
+    await domReady() 
+
+    this.discoverContents()
+
+    this.addMagicEditorPlugin()
+    window.chunksProjectIdentifier = this.projectId
+  },
+
+  discoverContents: function() {
     this.discoverChunks(el => {
       this.getChunk(el)
     })
@@ -15,9 +24,6 @@ const EditmodeStandAlone = {
     this.discoverCollections(el => {
       this.getCollection(el)
     })
-
-    this.addMagicEditorPlugin()
-    window.chunksProjectIdentifier = this.projectId
   },
 
   // Scan DOM Search for tags with chunk-id attr
@@ -34,14 +40,10 @@ const EditmodeStandAlone = {
     const chunkId = el.getAttribute('chunk-id')
     const chunkProjectId = el.getAttribute('project-id')
 
-    api
-      .get(`/chunks/${chunkId}?project_id=${chunkProjectId || this.projectId}`)
-      .then(res => {
-        const chunk = res.data
-
-        // Todo: Transfer to renderChunk
-        Component.renderChunk(el, chunk)
-      })
+    api(`/chunks/${chunkId}?project_id=${chunkProjectId || this.projectId}`).then(res => {
+      const chunk = res
+      Component.renderChunk(el, chunk)
+    })
   },
 
   // Scan DOM Search for collection tags
@@ -62,13 +64,14 @@ const EditmodeStandAlone = {
       projectId: chunkProjectId || this.projectId
     });
 
-    api.get(`/chunks/?${urlParams}`).then(res => {
-      const chunks = res.data.chunks
+    api(`/chunks/?${urlParams}`).then(res => {
+      const chunks = res.chunks
 
       Component.renderCollection(el, chunks)
     })
   },
 
+  // Add magic editor plugin script tag before closing body tag
   addMagicEditorPlugin: function() {
     var s = document.createElement('script')
     s.setAttribute('src', "https://static.editmode.com/editmode@^2.0.0/dist/editmode.js")
@@ -81,3 +84,5 @@ const EditmodeStandAlone = {
 
 window.EditmodeStandAlone = EditmodeStandAlone
 window.EditmodeStandAlone.start()
+
+export default EditmodeStandAlone

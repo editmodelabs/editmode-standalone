@@ -1,9 +1,11 @@
-import axios from 'axios';
-
-export const api = axios.create({
-  baseURL: "https://api.editmode.com/",
-  headers: {
-    Accept: "application/json",
-    referrer: window.location.href
-  },
-});
+export async function api(path) {
+  return fetch("https://api.editmode.com" + path,
+    {
+      method: 'get',
+      headers: {
+        Accept: "application/json",
+        referrer: window.location.href
+      }
+    }
+  ).then(response => response.json())
+}

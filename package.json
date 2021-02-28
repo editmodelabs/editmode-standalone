@@ -4,24 +4,28 @@
   "author": "Jen Villaganas",
   "license": "MIT",
   "private": false,
-  "main": "dist/standalone",
   "scripts": {
-    "watch": "webpack --watch",
-    "start": "webpack serve --open",
-    "build": "webpack"
+    "watch": "rollup -c -w",
+    "dev": "rollup -c -w",
+    "build": "rollup -c"
   },
-  "dependencies": {
-    "axios": "^0.21.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@auto-it/all-contributors": "^9.35.1",
     "@auto-it/first-time-contributor": "^9.35.1",
+    "@babel/core": "^7.13.8",
+    "@babel/preset-env": "^7.13.8",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^11.2.0",
     "all-contributors-cli": "^6.14.2",
     "auto": "^9.35.1",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^5.24.2",
-    "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2"
+    "rollup": "^2.40.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-filesize": "^9.1.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-serve": "^1.1.0"
   },
   "auto": {
     "plugins": [
