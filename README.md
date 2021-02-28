@@ -5,7 +5,7 @@ Editmode allows you to turn plain text in your website into easily inline-editab
 ## Installation
 **From CDN:** Add the following script to the end of your `<head>` section.
 ```HTML
-<script src="https://unpkg.com/editmode-standalone@^1/dist/main.min.js"></script>
+<script src="https://unpkg.com/editmode-standalone@^1/dist/standalone.js"></script>
 ```
 
 **Set an Editmode Project ID:** Add the following script to the end of your `<head>` or `<body>` section.
