@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "watch": "rollup -c -w",
+    "watch": "rollup -c rollup.config.dev.js",
     "dev": "rollup -c -w",
     "build": "rollup -c"
   },
@@ -24,6 +24,7 @@
     "rollup": "^2.40.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-filesize": "^9.1.1",
+    "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-serve": "^1.1.0"
   },
