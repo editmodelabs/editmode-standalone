@@ -28,11 +28,11 @@ Editmode allows you to turn plain text in your website into easily inline-editab
 
 *Collection*
 ```HTML
-<collection collection-id="some-collection-identifier" class="container-class" itemClass="classForEachItems">
+<template collection-id="some-collection-identifier" class="container-class" itemClass="classForEachItems">
   <p field-id="field-id-or-name">Placeholder for this field</p>
 
   <img field-id="field-id-or-name"/>
-</collection>
+</template>
 ```
 
 ### Demo

@@ -60,7 +60,8 @@
         collectionItems.forEach(collectionItem => {
           const itemWrapper = this.createCollectionItem(el, collectionItem);
           collectionContainer.appendChild(itemWrapper);
-        }); // We add hidden item to every collection so we can use this el as template for a new collection item 
+        }); // Info: We add hidden item to every collection so we can use
+        // this el as template for a new collection item 
 
         const dummyItem = this.createCollectionItem(el, collectionItems[0], true);
         collectionContainer.appendChild(dummyItem);
@@ -75,7 +76,7 @@
     },
     createCollectionItem: function createCollectionItem(el, item, dummy = false) {
       let template = el.innerHTML;
-      const fields = el.querySelectorAll("[field-id]");
+      const fields = el.content.querySelectorAll("[field-id]");
       const itemWrapper = document.createElement('div');
       const itemClass = el.getAttribute('itemClass') || "";
       itemWrapper.setAttribute('class', itemClass);
@@ -138,7 +139,7 @@
     },
     // Scan DOM Search for collection tags
     discoverCollections: function discoverCollections(callback) {
-      const collectionElements = document.querySelectorAll('collection');
+      const collectionElements = document.querySelectorAll('template[collection-id]');
       collectionElements.forEach(el => {
         callback(el);
       });

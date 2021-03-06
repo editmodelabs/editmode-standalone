@@ -48,7 +48,7 @@ const EditmodeStandAlone = {
 
   // Scan DOM Search for collection tags
   discoverCollections: function(callback) {
-    const collectionElements = document.querySelectorAll('collection')
+    const collectionElements = document.querySelectorAll('template[collection-id]')
 
     collectionElements.forEach(el => {
       callback(el)

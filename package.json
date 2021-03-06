@@ -5,8 +5,8 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "watch": "rollup -c rollup.config.dev.js",
-    "dev": "rollup -c -w",
+    "watch": "rollup -c -w rollup.config.dev.js -w",
+    "dev": "rollup -c rollup.config.dev.js -w",
     "build": "rollup -c"
   },
   "dependencies": {},
