@@ -1,3 +1,19 @@
+# v1.0.2 (Sat Mar 06 2021)
+
+:tada: This release contains work from a new contributor! :tada:
+
+Thank you, Jen Villaganas  ([@puuripurii](https://github.com/puuripurii)), for all your work!
+
+#### 🐛 Bug Fix
+
+- Use Template Tag for Collection Render [#1](https://github.com/editmodelabs/editmode-standalone/pull/1) ([@puuripurii](https://github.com/puuripurii))
+
+#### Authors: 1
+
+- Jen Villaganas  ([@puuripurii](https://github.com/puuripurii))
+
+---
+
 # v1.0.1 (Sun Feb 28 2021)
 
 :tada: This release contains work from a new contributor! :tada:
