@@ -39,9 +39,10 @@ const Component = {
         collectionContainer.appendChild(itemWrapper)
       })
 
-      // We add hidden item to every collection so we can use this el as template for a new collection item 
+      // Info: We add hidden item to every collection so we can use
+      // this el as template for a new collection item 
       const dummyItem = this.createCollectionItem(el, collectionItems[0], true)
-
+      
       collectionContainer.appendChild(dummyItem)
       el.replaceWith(collectionContainer)
     } else {
@@ -55,7 +56,7 @@ const Component = {
 
   createCollectionItem: function(el, item, dummy = false) {
     let template = el.innerHTML
-    const fields = el.querySelectorAll("[field-id]")
+    const fields = el.content.querySelectorAll("[field-id]")
     const itemWrapper = document.createElement('div')
     const itemClass = el.getAttribute('itemClass') || ""
 
@@ -77,7 +78,7 @@ const Component = {
       if (dummy) fieldChunkData.content = "" // Info: Line 42
 
       const cloneFieldElement = fieldTemplate.cloneNode(true)
-
+      
       const newComponent = this.renderChunk(cloneFieldElement, fieldChunkData, item, dummy)
       template = template.replace(fieldTemplate.outerHTML, newComponent.outerHTML)
     })

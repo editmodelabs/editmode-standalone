@@ -138,7 +138,8 @@
     },
     // Scan DOM Search for collection tags
     discoverCollections: function discoverCollections(callback) {
-      const collectionElements = document.querySelectorAll('collection');
+      console.log('what ist his');
+      const collectionElements = document.querySelectorAll('');
       collectionElements.forEach(el => {
         callback(el);
       });
