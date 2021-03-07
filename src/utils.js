@@ -26,13 +26,9 @@ export const parseVariable = (content, variables) => {
     if (variables) {
         try {
             eval(`variables = ${variables}`)
-            if (typeof variables === 'string') {
-                variables = JSON.parse(variables)
-            }
-
             if (typeof variables != 'object') throw "Invalid Variable Value " + variables
         } catch (error) {
-            console.error(error)
+            console.log(error)
         }
 
         const tokens = (content.match(/\{{(.*?)\}}/g) || []).map(t => t.substr(2, t.length - 4))
