@@ -1,3 +1,15 @@
+# v1.0.3 (Sun Mar 07 2021)
+
+#### 🐛 Bug Fix
+
+- Parse Variable [#2](https://github.com/editmodelabs/editmode-standalone/pull/2) ([@puuripurii](https://github.com/puuripurii))
+
+#### Authors: 1
+
+- Jen Villaganas  ([@puuripurii](https://github.com/puuripurii))
+
+---
+
 # v1.0.2 (Sat Mar 06 2021)
 
 :tada: This release contains work from a new contributor! :tada:
