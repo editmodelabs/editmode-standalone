@@ -35,14 +35,17 @@ Editmode allows you to turn plain text in your website into easily inline-editab
 </template>
 ```
 
+*Variable Parsing*
+```HTML
+  <p variables="{name: 'Jen'}" chunk-id="some-chunk-identifier">Hi, User</p>
+```
+
 ### Demo
 [Open in Repl.it](https://repl.it/@jengkarlong/EditmodeStandAlone-Example)
 
 ### Todos
-- Parse variable values
 - Caching
-
-
+- Image Transformation
 
 ## Contributors ✨
 
