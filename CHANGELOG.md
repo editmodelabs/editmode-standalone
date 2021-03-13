@@ -1,3 +1,15 @@
+# v1.0.5 (Sat Mar 13 2021)
+
+#### ⚠️ Pushed to `master`
+
+- Merge branch 'master' of github.com:editmodelabs/editmode-standalone ([@jenvillaganas](https://github.com/jenvillaganas))
+
+#### Authors: 1
+
+- Jen Villaganas  ([@jenvillaganas](https://github.com/jenvillaganas))
+
+---
+
 # v1.0.4 (Sat Mar 13 2021)
 
 #### 🐛 Bug Fix
