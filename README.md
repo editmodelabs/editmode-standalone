@@ -57,7 +57,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://github.com/puuripurii"><img src="https://avatars.githubusercontent.com/u/26903002?v=4?s=40" width="40px;" alt=""/><br /><sub><b>Jen Villaganas </b></sub></a><br /><a href="https://github.com/Editmodelabs/editmode-standalone/commits?author=puuripurii" title="Code">💻</a> <a href="https://github.com/Editmodelabs/editmode-standalone/commits?author=puuripurii" title="Documentation">📖</a> <a href="#infra-puuripurii" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/Editmodelabs/editmode-standalone/commits?author=puuripurii" title="Tests">⚠️</a></td>
-    <td align="center"><a href="https://github.com/jenvillaganas"><img src="https://avatars.githubusercontent.com/u/26903002?v=4?s=40" width="40px;" alt=""/><br /><sub><b>Jen Villaganas </b></sub></a><br /><a href="https://github.com/Editmodelabs/editmode-standalone/commits?author=jenvillaganas" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/jenvillaganas"><img src="https://avatars.githubusercontent.com/u/26903002?v=4?s=40" width="40px;" alt=""/><br /><sub><b>Jen Villaganas </b></sub></a><br /><a href="https://github.com/Editmodelabs/editmode-standalone/commits?author=jenvillaganas" title="Code">💻</a> <a href="https://github.com/Editmodelabs/editmode-standalone/commits?author=jenvillaganas" title="Documentation">📖</a></td>
   </tr>
 </table>
 
