@@ -44,3 +44,15 @@ export const parseVariable = (content, variables) => {
 
     return content
 }
+
+
+export const getCachedData = (id) => {
+    const data = localStorage.getItem(id);
+    if (data) {
+        return JSON.parse(data)
+    }
+}
+
+export const storeCache = (id, data) => {
+    localStorage.setItem(id, JSON.stringify(data));
+}

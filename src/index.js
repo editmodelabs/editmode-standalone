@@ -1,4 +1,4 @@
-import {domReady, api} from './utils'
+import { domReady, api, getCachedData, storeCache } from './utils'
 import Component from "./components"
 
 const EditmodeStandAlone = {
@@ -39,10 +39,20 @@ const EditmodeStandAlone = {
   getChunk: function(el) {
     const chunkId = el.getAttribute('chunk-id')
     const chunkProjectId = el.getAttribute('project-id')
+    const cacheData = getCachedData(chunkId)
+    
+    if (cacheData) {
+      console.log('%c Rendering from cache: ' + chunkId, 'color: #bada55');
+      Component.renderChunk(el, cacheData)
+    }
 
-    api(`/chunks/${chunkId}?project_id=${chunkProjectId || this.projectId}`).then(res => {
-      const chunk = res
-      Component.renderChunk(el, chunk)
+    api(`/chunks/${chunkId}?project_id=${chunkProjectId || this.projectId}`).then(chunk => {
+      storeCache(chunkId, chunk)
+
+      // If no cache data, render content from API
+      if (!cacheData) {
+        Component.renderChunk(el, chunk)
+      }
     })
   },
 
@@ -64,10 +74,20 @@ const EditmodeStandAlone = {
       projectId: chunkProjectId || this.projectId
     });
 
+    const cacheData = getCachedData(collectionId)
+    
+    if (cacheData) {
+      console.log('%c Rendering from cache: ' + collectionId, 'color: #bada55');
+      Component.renderCollection(el, cacheData)
+    }
+
     api(`/chunks/?${urlParams}`).then(res => {
       const chunks = res.chunks
+      storeCache(collectionId, chunks)
 
-      Component.renderCollection(el, chunks)
+      if (!cacheData) {
+        Component.renderCollection(el, chunks)
+      }
     })
   },
 
