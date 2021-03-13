@@ -56,3 +56,18 @@ export const getCachedData = (id) => {
 export const storeCache = (id, data) => {
     localStorage.setItem(id, JSON.stringify(data));
 }
+
+export const setTransformAttributes = (url, transform) => {
+    try {
+        transform = transform.trim().replace(/\s+/g, ' ').replaceAll(" ", ",")
+        console.log(transform)
+        let newUrl = new URL(url)
+
+        newUrl.searchParams.append('tr', transform)
+
+        return newUrl.toString()
+    } catch (er) {
+        console.warn(er)
+        return url
+    }
+}

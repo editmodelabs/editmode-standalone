@@ -37,15 +37,21 @@ Editmode allows you to turn plain text in your website into easily inline-editab
 
 *Variable Parsing*
 ```HTML
-  <p variables="{name: 'Jen'}" chunk-id="some-chunk-identifier">Hi, User</p>
+<p variables="{name: 'Jen'}" chunk-id="some-chunk-identifier">Hi, User</p>
 ```
+
+*Working with Image Transformation*
+
+Use `transform` attribute to perform real-time image transformations to deliver perfect images to the end-users.
+
+This chunk should render an image with 200 x 200 dimension:
+```HTML
+<img chunk-id="some-img-chunk-identifier"  transform="w-200 h-200 c-force" />
+```
+Please see complete list of [transformation parameters](https://editmode.com/docs#/imagekit_properties)
 
 ### Demo
 [Open in Repl.it](https://repl.it/@jengkarlong/EditmodeStandAlone-Example)
-
-### Todos
-- Caching
-- Image Transformation
 
 ## Contributors ✨
 
@@ -56,8 +62,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/puuripurii"><img src="https://avatars.githubusercontent.com/u/26903002?v=4?s=40" width="40px;" alt=""/><br /><sub><b>Jen Villaganas </b></sub></a><br /><a href="https://github.com/Editmodelabs/editmode-standalone/commits?author=puuripurii" title="Code">💻</a> <a href="https://github.com/Editmodelabs/editmode-standalone/commits?author=puuripurii" title="Documentation">📖</a> <a href="#infra-puuripurii" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/Editmodelabs/editmode-standalone/commits?author=puuripurii" title="Tests">⚠️</a></td>
-    <td align="center"><a href="https://github.com/jenvillaganas"><img src="https://avatars.githubusercontent.com/u/26903002?v=4?s=40" width="40px;" alt=""/><br /><sub><b>Jen Villaganas </b></sub></a><br /><a href="https://github.com/Editmodelabs/editmode-standalone/commits?author=jenvillaganas" title="Code">💻</a> <a href="https://github.com/Editmodelabs/editmode-standalone/commits?author=jenvillaganas" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/jenvillaganas"><img src="https://avatars.githubusercontent.com/u/26903002?v=4?s=40" width="40px;" alt=""/><br /><sub><b>Jen Villaganas </b></sub></a><br /><a href="https://github.com/Editmodelabs/editmode-standalone/commits?author=jenvillaganas" title="Code">💻</a> <a href="https://github.com/Editmodelabs/editmode-standalone/commits?author=jenvillaganas" title="Documentation">📖</a> <a href="#infra-jenvillaganas" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/Editmodelabs/editmode-standalone/commits?author=jenvillaganas" title="Tests">⚠️</a></td>
   </tr>
 </table>
 

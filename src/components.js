@@ -1,8 +1,9 @@
-import { parseVariable } from './utils'
+import { parseVariable, setTransformAttributes } from './utils'
 
 const Component = {
   renderChunk: function(el, chunk, collectionItem = null) {
     const isNotEditable = el.getAttribute('editable') === false
+    const transform = el.getAttribute('transform')
     let variables = el.getAttribute('variables')
 
     el.dataset.chunk = chunk.identifier
@@ -19,7 +20,11 @@ const Component = {
     }
 
     if (chunk.chunk_type == 'image') {
+      if (chunk.content && transform) {
+        chunk.content = setTransformAttributes(chunk.content, transform)
+      }
       el.src = chunk.content || "https://editmode.com/upload.png"
+
     } else {
       el.innerHTML = parseVariable(chunk.content, variables)
     }
