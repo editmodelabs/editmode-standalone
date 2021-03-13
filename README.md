@@ -37,8 +37,18 @@ Editmode allows you to turn plain text in your website into easily inline-editab
 
 *Variable Parsing*
 ```HTML
-  <p variables="{name: 'Jen'}" chunk-id="some-chunk-identifier">Hi, User</p>
+<p variables="{name: 'Jen'}" chunk-id="some-chunk-identifier">Hi, User</p>
 ```
+
+*Working with Image Transformation*
+
+Use `transform` attribute to perform real-time image transformations to deliver perfect images to the end-users.
+
+This chunk should render an image with 200 x 200 dimension:
+```HTML
+<img chunk-id="some-img-chunk-identifier"  transform="w-200 h-200 c-force" />
+```
+Please see complete list of [transformation parameters](https://editmode.com/docs#/imagekit_properties)
 
 ### Demo
 [Open in Repl.it](https://repl.it/@jengkarlong/EditmodeStandAlone-Example)
