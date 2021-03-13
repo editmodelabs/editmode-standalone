@@ -46,6 +46,16 @@
 
       return content;
     };
+    const getCachedData = id => {
+      const data = localStorage.getItem(id);
+
+      if (data) {
+        return JSON.parse(data);
+      }
+    };
+    const storeCache = (id, data) => {
+      localStorage.setItem(id, JSON.stringify(data));
+    };
 
     const Component = {
       renderChunk: function renderChunk(el, chunk, collectionItem = null) {
@@ -154,9 +164,19 @@
       getChunk: function getChunk(el) {
         const chunkId = el.getAttribute('chunk-id');
         const chunkProjectId = el.getAttribute('project-id');
-        api(`/chunks/${chunkId}?project_id=${chunkProjectId || this.projectId}`).then(res => {
-          const chunk = res;
-          Component.renderChunk(el, chunk);
+        const cacheData = getCachedData(chunkId);
+
+        if (cacheData) {
+          console.log('%c Rendering from cache: ' + chunkId, 'color: #bada55');
+          Component.renderChunk(el, cacheData);
+        }
+
+        api(`/chunks/${chunkId}?project_id=${chunkProjectId || this.projectId}`).then(chunk => {
+          storeCache(chunkId, chunk); // If no cache data, render content from API
+
+          if (!cacheData) {
+            Component.renderChunk(el, chunk);
+          }
         });
       },
       // Scan DOM Search for collection tags
@@ -174,9 +194,20 @@
           collection_identifier: collectionId,
           projectId: chunkProjectId || this.projectId
         });
+        const cacheData = getCachedData(collectionId);
+
+        if (cacheData) {
+          console.log('%c Rendering from cache: ' + collectionId, 'color: #bada55');
+          Component.renderCollection(el, cacheData);
+        }
+
         api(`/chunks/?${urlParams}`).then(res => {
           const chunks = res.chunks;
-          Component.renderCollection(el, chunks);
+          storeCache(collectionId, chunks);
+
+          if (!cacheData) {
+            Component.renderCollection(el, chunks);
+          }
         });
       },
       // Add magic editor plugin script tag before closing body tag
