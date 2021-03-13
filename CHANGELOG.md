@@ -1,3 +1,15 @@
+# v1.0.6 (Sat Mar 13 2021)
+
+#### 🐛 Bug Fix
+
+- Handle Transform Image [#4](https://github.com/editmodelabs/editmode-standalone/pull/4) ([@jenvillaganas](https://github.com/jenvillaganas))
+
+#### Authors: 1
+
+- Jen Villaganas  ([@jenvillaganas](https://github.com/jenvillaganas))
+
+---
+
 # v1.0.5 (Sat Mar 13 2021)
 
 #### ⚠️ Pushed to `master`
