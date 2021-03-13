@@ -1,3 +1,19 @@
+# v1.0.4 (Sat Mar 13 2021)
+
+#### 🐛 Bug Fix
+
+- Add Store and Get Cache [#3](https://github.com/editmodelabs/editmode-standalone/pull/3) ([@jenvillaganas](https://github.com/jenvillaganas))
+
+#### ⚠️ Pushed to `master`
+
+- build file ([@jenvillaganas](https://github.com/jenvillaganas))
+
+#### Authors: 1
+
+- Jen Villaganas  ([@jenvillaganas](https://github.com/jenvillaganas))
+
+---
+
 # v1.0.3 (Sun Mar 07 2021)
 
 #### 🐛 Bug Fix
