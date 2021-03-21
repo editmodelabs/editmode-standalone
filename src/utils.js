@@ -19,7 +19,13 @@ export async function api(path, config = {}) {
 
     if ( parameters ) {
         for (let [key, val] of Object.entries(parameters)) {
-            if (val) urlparams.set(key, val)
+            if (val) {
+                if (Array.isArray(val)) {
+                    val.forEach(v => urlparams.append(key + "[]", v))
+                } else {
+                    urlparams.append(key, val)
+                }
+            }
         }
     }
 

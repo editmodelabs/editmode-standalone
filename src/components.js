@@ -32,9 +32,12 @@ const Component = {
     return el
   },
 
-  renderCollection: function(el, collectionItems) {
+  renderCollection: function(el, collectionItems, limit = null) {
     const collectionContainer = document.createElement('div')
     const containerClass = el.getAttribute('class') || ""
+
+    // Limit item display
+    if (limit) collectionItems = collectionItems.splice(0, limit)
 
     if (collectionItems.length) {
       collectionContainer.setAttribute('class', `${containerClass} chunks-collection-wrapper`)
