@@ -4,6 +4,7 @@ import Component from "./components"
 const EditmodeStandAlone = {
   projectId: null,
   branchId: setBranchId(),
+  defaultChunks: [],
 
   // Initialize
   start: async function () {
