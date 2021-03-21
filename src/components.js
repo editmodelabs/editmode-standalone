@@ -72,6 +72,7 @@ const Component = {
       // Info: Line 42
       itemWrapper.classList.add("chunks-hide")
       itemWrapper.classList.add("chunks-col-placeholder-wrapper")
+      itemWrapper.style.display = "none"
     }else{
       itemWrapper.classList.add("chunks-collection-item--wrapper")
     }

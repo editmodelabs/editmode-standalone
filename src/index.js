@@ -1,8 +1,9 @@
-import { domReady, api, getCachedData, storeCache } from './utils'
+import { domReady, api, getCachedData, storeCache, setBranchId } from './utils'
 import Component from "./components"
 
 const EditmodeStandAlone = {
   projectId: null,
+  branchId: setBranchId(),
 
   // Initialize
   start: async function () {
@@ -11,8 +12,8 @@ const EditmodeStandAlone = {
     await domReady() 
 
     this.discoverContents()
-
     this.addMagicEditorPlugin()
+
     window.chunksProjectIdentifier = this.projectId
   },
 
@@ -39,15 +40,24 @@ const EditmodeStandAlone = {
   getChunk: function(el) {
     const chunkId = el.getAttribute('chunk-id')
     const chunkProjectId = el.getAttribute('project-id')
-    const cacheData = getCachedData(chunkId)
+    const cacheid = chunkId + this.projectId + this.branchId
+
+    const cacheData = getCachedData(cacheid)
     
     if (cacheData) {
       console.log('%c Rendering from cache: ' + chunkId, 'color: #bada55');
       Component.renderChunk(el, cacheData)
     }
 
-    api(`/chunks/${chunkId}?project_id=${chunkProjectId || this.projectId}`).then(chunk => {
-      storeCache(chunkId, chunk)
+    api(`/chunks/${chunkId}`, 
+      { 
+        parameters: { 
+          project_id: chunkProjectId || this.projectId,
+          branch_id: this.branchId
+        }
+      }
+    ).then(chunk => {
+      storeCache(cacheid, chunk)
 
       // If no cache data, render content from API
       if (!cacheData) {
@@ -69,26 +79,31 @@ const EditmodeStandAlone = {
   getCollection: function(el) {
     const collectionId = el.getAttribute('collection-id')
     const chunkProjectId = el.getAttribute('project-id')
-    const urlParams = new URLSearchParams({
-      collection_identifier: collectionId,
-      projectId: chunkProjectId || this.projectId
-    });
+    const cacheid = collectionId + this.projectId + this.branchId
 
-    const cacheData = getCachedData(collectionId)
+    const cacheData = getCachedData(cacheid)
     
     if (cacheData) {
       console.log('%c Rendering from cache: ' + collectionId, 'color: #bada55');
       Component.renderCollection(el, cacheData)
     }
 
-    api(`/chunks/?${urlParams}`).then(res => {
-      const chunks = res.chunks
-      storeCache(collectionId, chunks)
+    api("/chunks/", 
+      {
+        parameters: {
+          collection_identifier: collectionId,
+          project_id: chunkProjectId || this.projectId,
+          branch_id: this.branchId
+        }
+      }).then(res => {
+        const chunks = res.chunks
 
-      if (!cacheData) {
-        Component.renderCollection(el, chunks)
-      }
-    })
+        storeCache(cacheid, chunks)
+
+        if (!cacheData) {
+          Component.renderCollection(el, chunks)
+        }
+      })
   },
 
   // Add magic editor plugin script tag before closing body tag
