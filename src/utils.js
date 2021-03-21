@@ -96,3 +96,8 @@ export const setTransformAttributes = (url, transform) => {
         return url
     }
 }
+
+export const logger = (message) => {
+    // TODO: Add type to change color between warn info and danger
+    console.log(`%c ${message}`, 'color: #bada55');
+}

@@ -1,4 +1,4 @@
-import { domReady, api, getCachedData, storeCache, setBranchId } from './utils'
+import { domReady, api, getCachedData, storeCache, setBranchId, logger } from './utils'
 import Component from "./components"
 
 const EditmodeStandAlone = {
@@ -45,8 +45,16 @@ const EditmodeStandAlone = {
     const cacheData = getCachedData(cacheid)
     
     if (cacheData) {
-      console.log('%c Rendering from cache: ' + chunkId, 'color: #bada55');
+      logger('Rendering from cache: ' + chunkId)
       Component.renderChunk(el, cacheData)
+    }
+
+    // Render from default chunk
+    if (!cacheData && this.defaultChunks.length) {
+      logger('Rendering from defaultChunks: ' + chunkId)
+      let chunk = this.defaultChunks.find(c => c.identifier == chunkId )
+      storeCache(cacheid, chunk)
+      Component.renderChunk(el, chunk)
     }
 
     api(`/chunks/${chunkId}`, 
@@ -60,7 +68,8 @@ const EditmodeStandAlone = {
       storeCache(cacheid, chunk)
 
       // If no cache data, render content from API
-      if (!cacheData) {
+      if (!cacheData && !this.defaultChunks.length) {
+        logger('Rendering from API: ' + chunkId)
         Component.renderChunk(el, chunk)
       }
     })
@@ -86,11 +95,16 @@ const EditmodeStandAlone = {
     const cacheid = collectionId + this.projectId + this.branchId + tags.join("")
     const cacheData = getCachedData(cacheid)
 
-    console.log(tags)
-
     if (cacheData) {
-      console.log('%c Rendering from cache: ' + collectionId, 'color: #bada55');
+      logger('Rendering from cache: ' + collectionId)
       Component.renderCollection(el, cacheData, limit)
+    }
+
+    if (!tags.length && !cacheData && this.defaultChunks.length) {
+      logger('Rendering from defaultChunks: ' + collectionId)
+      let chunks = this.defaultChunks.filter(c => c.collection && c.collection.identifier == collectionId)
+      storeCache(cacheid, chunks)
+      Component.renderCollection(el, chunks, limit)
     }
 
     api("/chunks/", 
@@ -105,7 +119,8 @@ const EditmodeStandAlone = {
         let chunks = res.chunks
         storeCache(cacheid, chunks)
 
-        if (!cacheData) {
+        if (!cacheData && !this.defaultChunks.length) {
+          logger('Rendering from defaultChunks: ' + collectionId)
           Component.renderCollection(el, chunks, limit)
         }
       })

@@ -2,7 +2,7 @@ import { parseVariable, setTransformAttributes } from './utils'
 
 const Component = {
   renderChunk: function(el, chunk, collectionItem = null) {
-    if (!chunk.content) return el
+    if (typeof chunk.content == 'undefined') return el
 
     const isNotEditable = el.getAttribute('editable') === false
     const transform = el.getAttribute('transform')
@@ -91,7 +91,7 @@ const Component = {
 
       const cloneFieldElement = fieldTemplate.cloneNode(true)
 
-      const newComponent = this.renderChunk(cloneFieldElement, fieldChunkData, item, dummy) 
+      const newComponent = this.renderChunk(cloneFieldElement, fieldChunkData, item, dummy) || fieldTemplate
       template = template.replace(fieldTemplate.outerHTML, newComponent.outerHTML)
     })
 
