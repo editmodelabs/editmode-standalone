@@ -10,8 +10,26 @@ export function domReady() {
     })
 }
 
-export async function api(path) {
-    return fetch("https://api.editmode.com" + path,
+export async function api(path, config = {}) {
+    const { parameters } = config
+    const url = new URL("https://api.editmode.com")
+    const urlparams = url.searchParams
+
+    url.pathname = path
+
+    if ( parameters ) {
+        for (let [key, val] of Object.entries(parameters)) {
+            if (val) {
+                if (Array.isArray(val)) {
+                    val.forEach(v => urlparams.append(key + "[]", v))
+                } else {
+                    urlparams.append(key, val)
+                }
+            }
+        }
+    }
+
+    return fetch(url.toString(),
         {
             method: 'get',
             headers: {
@@ -45,16 +63,23 @@ export const parseVariable = (content, variables) => {
     return content
 }
 
+export const setBranchId = () => {
+    const url = new URL(window.location.href)
+    const id = url.searchParams.get('em_branch_id')
+
+    return id || ""
+}
 
 export const getCachedData = (id) => {
-    const data = localStorage.getItem(id);
+    const data = localStorage.getItem(id)
     if (data) {
         return JSON.parse(data)
     }
 }
 
 export const storeCache = (id, data) => {
-    localStorage.setItem(id, JSON.stringify(data));
+    if (!data) return
+    localStorage.setItem(id, JSON.stringify(data))
 }
 
 export const setTransformAttributes = (url, transform) => {
@@ -70,4 +95,9 @@ export const setTransformAttributes = (url, transform) => {
         console.warn(er)
         return url
     }
+}
+
+export const logger = (message) => {
+    // TODO: Add type to change color between warn info and danger
+    console.log(`%c ${message}`, 'color: #bada55');
 }

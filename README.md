@@ -35,6 +35,21 @@ Editmode allows you to turn plain text in your website into easily inline-editab
 </template>
 ```
 
+*Filter Collection*
+
+Use `tags` attribute to filter collection items by tags, use `limit` attribute to limit how many collection items will be rendered.
+
+Seperate the tags with space for multiple tags `tags="heropost recentposts"`
+
+```HTML
+<template collection-id="some-collection-identifier" tags="recentposts" limit="3">
+  <p field-id="field-id-or-name">Placeholder for this field</p>
+
+  <img field-id="field-id-or-name"/>
+</template>
+```
+
+
 *Variable Parsing*
 ```HTML
 <p variables="{name: 'Jen'}" chunk-id="some-chunk-identifier">Hi, User</p>
@@ -49,6 +64,7 @@ This chunk should render an image with 200 x 200 dimension:
 <img chunk-id="some-img-chunk-identifier"  transform="w-200 h-200 c-force" />
 ```
 Please see complete list of [transformation parameters](https://editmode.com/docs#/imagekit_properties)
+
 
 ### Demo
 [Open in Repl.it](https://repl.it/@jengkarlong/EditmodeStandAlone-Example)

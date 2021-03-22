@@ -2,6 +2,8 @@ import { parseVariable, setTransformAttributes } from './utils'
 
 const Component = {
   renderChunk: function(el, chunk, collectionItem = null) {
+    if (typeof chunk.content == 'undefined') return el
+
     const isNotEditable = el.getAttribute('editable') === false
     const transform = el.getAttribute('transform')
     let variables = el.getAttribute('variables')
@@ -32,9 +34,12 @@ const Component = {
     return el
   },
 
-  renderCollection: function(el, collectionItems) {
+  renderCollection: function(el, collectionItems, limit = null) {
     const collectionContainer = document.createElement('div')
     const containerClass = el.getAttribute('class') || ""
+
+    // Limit item display
+    if (limit) collectionItems = collectionItems.splice(0, limit)
 
     if (collectionItems.length) {
       collectionContainer.setAttribute('class', `${containerClass} chunks-collection-wrapper`)
@@ -72,6 +77,7 @@ const Component = {
       // Info: Line 42
       itemWrapper.classList.add("chunks-hide")
       itemWrapper.classList.add("chunks-col-placeholder-wrapper")
+      itemWrapper.style.display = "none"
     }else{
       itemWrapper.classList.add("chunks-collection-item--wrapper")
     }
@@ -79,13 +85,13 @@ const Component = {
     const fieldChunks = item.content
 
     fields.forEach(fieldTemplate => {
-      const fieldChunkData = fieldChunks.find(fieldChunk => fieldTemplate.getAttribute('field-id') === fieldChunk.custom_field_identifier || fieldTemplate.getAttribute('field-id') === fieldChunk.custom_field_name)
+      const fieldChunkData = fieldChunks.find(fieldChunk => fieldTemplate.getAttribute('field-id') === fieldChunk.custom_field_identifier || fieldTemplate.getAttribute('field-id') === fieldChunk.custom_field_name) || {}
 
       if (dummy) fieldChunkData.content = "" // Info: Line 42
 
       const cloneFieldElement = fieldTemplate.cloneNode(true)
-      
-      const newComponent = this.renderChunk(cloneFieldElement, fieldChunkData, item, dummy)
+
+      const newComponent = this.renderChunk(cloneFieldElement, fieldChunkData, item, dummy) || fieldTemplate
       template = template.replace(fieldTemplate.outerHTML, newComponent.outerHTML)
     })
 

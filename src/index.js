@@ -1,8 +1,10 @@
-import { domReady, api, getCachedData, storeCache } from './utils'
+import { domReady, api, getCachedData, storeCache, setBranchId, logger } from './utils'
 import Component from "./components"
 
 const EditmodeStandAlone = {
   projectId: null,
+  branchId: setBranchId(),
+  defaultChunks: [],
 
   // Initialize
   start: async function () {
@@ -11,8 +13,8 @@ const EditmodeStandAlone = {
     await domReady() 
 
     this.discoverContents()
-
     this.addMagicEditorPlugin()
+
     window.chunksProjectIdentifier = this.projectId
   },
 
@@ -39,18 +41,35 @@ const EditmodeStandAlone = {
   getChunk: function(el) {
     const chunkId = el.getAttribute('chunk-id')
     const chunkProjectId = el.getAttribute('project-id')
-    const cacheData = getCachedData(chunkId)
+    const cacheid = chunkId + this.projectId + this.branchId
+    const cacheData = getCachedData(cacheid)
     
     if (cacheData) {
-      console.log('%c Rendering from cache: ' + chunkId, 'color: #bada55');
+      logger('Rendering from cache: ' + chunkId)
       Component.renderChunk(el, cacheData)
     }
 
-    api(`/chunks/${chunkId}?project_id=${chunkProjectId || this.projectId}`).then(chunk => {
-      storeCache(chunkId, chunk)
+    // Render from default chunk
+    if (!cacheData && this.defaultChunks.length) {
+      logger('Rendering from defaultChunks: ' + chunkId)
+      let chunk = this.defaultChunks.find(c => c.identifier == chunkId )
+      storeCache(cacheid, chunk)
+      Component.renderChunk(el, chunk)
+    }
+
+    api(`/chunks/${chunkId}`, 
+      { 
+        parameters: { 
+          project_id: chunkProjectId || this.projectId,
+          branch_id: this.branchId
+        }
+      }
+    ).then(chunk => {
+      storeCache(cacheid, chunk)
 
       // If no cache data, render content from API
-      if (!cacheData) {
+      if (!cacheData && !this.defaultChunks.length) {
+        logger('Rendering from API: ' + chunkId)
         Component.renderChunk(el, chunk)
       }
     })
@@ -69,26 +88,42 @@ const EditmodeStandAlone = {
   getCollection: function(el) {
     const collectionId = el.getAttribute('collection-id')
     const chunkProjectId = el.getAttribute('project-id')
-    const urlParams = new URLSearchParams({
-      collection_identifier: collectionId,
-      projectId: chunkProjectId || this.projectId
-    });
+    const limit = el.getAttribute('limit')
+    let tags = el.getAttribute('tags') || ""
+    tags = tags.split(" ").filter(Boolean) // Filter boolean will remove empty strings
 
-    const cacheData = getCachedData(collectionId)
-    
+    const cacheid = collectionId + this.projectId + this.branchId + tags.join("")
+    const cacheData = getCachedData(cacheid)
+
     if (cacheData) {
-      console.log('%c Rendering from cache: ' + collectionId, 'color: #bada55');
-      Component.renderCollection(el, cacheData)
+      logger('Rendering from cache: ' + collectionId)
+      Component.renderCollection(el, cacheData, limit)
     }
 
-    api(`/chunks/?${urlParams}`).then(res => {
-      const chunks = res.chunks
-      storeCache(collectionId, chunks)
+    if (!tags.length && !cacheData && this.defaultChunks.length) {
+      logger('Rendering from defaultChunks: ' + collectionId)
+      let chunks = this.defaultChunks.filter(c => c.collection && c.collection.identifier == collectionId)
+      storeCache(cacheid, chunks)
+      Component.renderCollection(el, chunks, limit)
+    }
 
-      if (!cacheData) {
-        Component.renderCollection(el, chunks)
-      }
-    })
+    api("/chunks/", 
+      {
+        parameters: {
+          collection_identifier: collectionId,
+          project_id: chunkProjectId || this.projectId,
+          branch_id: this.branchId,
+          tags: tags
+        }
+      }).then(res => {
+        let chunks = res.chunks
+        storeCache(cacheid, chunks)
+
+        if (!cacheData && !this.defaultChunks.length) {
+          logger('Rendering from defaultChunks: ' + collectionId)
+          Component.renderCollection(el, chunks, limit)
+        }
+      })
   },
 
   // Add magic editor plugin script tag before closing body tag
