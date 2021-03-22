@@ -1,3 +1,15 @@
+# v1.0.7 (Mon Mar 22 2021)
+
+#### 🐛 Bug Fix
+
+- Branch, Collection Filters, Default Chunks [#5](https://github.com/editmodelabs/editmode-standalone/pull/5) ([@jenvillaganas](https://github.com/jenvillaganas))
+
+#### Authors: 1
+
+- Jen Villaganas  ([@jenvillaganas](https://github.com/jenvillaganas))
+
+---
+
 # v1.0.6 (Sat Mar 13 2021)
 
 #### 🐛 Bug Fix
