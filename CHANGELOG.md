@@ -1,3 +1,15 @@
+# v1.0.8 (Wed Jun 02 2021)
+
+#### ⚠️ Pushed to `master`
+
+- Add option to override magic editor url ([@jenvillaganas](https://github.com/jenvillaganas))
+
+#### Authors: 1
+
+- Jen Villaganas  ([@jenvillaganas](https://github.com/jenvillaganas))
+
+---
+
 # v1.0.7 (Mon Mar 22 2021)
 
 #### 🐛 Bug Fix
