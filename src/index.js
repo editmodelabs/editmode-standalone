@@ -128,8 +128,10 @@ const EditmodeStandAlone = {
 
   // Add magic editor plugin script tag before closing body tag
   addMagicEditorPlugin: function() {
-    var s = document.createElement('script')
-    s.setAttribute('src', "https://static.editmode.com/editmode@^2.0.0/dist/editmode.js")
+    let s = document.createElement('script')
+    let url =  "https://static.editmode.com/editmode@^2.0.0/dist/editmode.js"
+    if(window.editmodeMagicEditorUrl) url = window.editmodeMagicEditorUrl
+    s.setAttribute('src', url)
     s.async = true
 
     document.body.appendChild( s )
