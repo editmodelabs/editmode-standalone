@@ -11,11 +11,13 @@ export function domReady() {
 }
 
 export async function api(path, config = {}) {
-    const { parameters } = config
-    const url = new URL("https://api.editmode.com")
+    let { parameters } = config
+    const url = new URL("https://api2.editmode.com")
     const urlparams = url.searchParams
 
     url.pathname = path
+
+    parameters["referrer"] = window.location.href // Send Referrer URL for Tracking
 
     if ( parameters ) {
         for (let [key, val] of Object.entries(parameters)) {
@@ -33,8 +35,7 @@ export async function api(path, config = {}) {
         {
             method: 'get',
             headers: {
-                Accept: "application/json",
-                referrer: window.location.href
+                Accept: "application/json"
             }
         }
     ).then(response => response.json())
