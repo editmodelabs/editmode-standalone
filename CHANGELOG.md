@@ -1,3 +1,15 @@
+# v1.0.9 (Mon Sep 06 2021)
+
+#### 🐛 Bug Fix
+
+- New Magic Editor Compatibility [#6](https://github.com/editmodelabs/editmode-standalone/pull/6) ([@jenvillaganas](https://github.com/jenvillaganas))
+
+#### Authors: 1
+
+- Jen Villaganas  ([@jenvillaganas](https://github.com/jenvillaganas))
+
+---
+
 # v1.0.8 (Wed Jun 02 2021)
 
 #### ⚠️ Pushed to `master`
