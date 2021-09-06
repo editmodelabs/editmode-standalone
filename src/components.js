@@ -1,7 +1,7 @@
 import { parseVariable, setTransformAttributes } from './utils'
 
 const Component = {
-  renderChunk: function(el, chunk, collectionItem = null) {
+  renderChunk: function(el, chunk, collectionItem = null, dummy = false) {
     if (typeof chunk.content == 'undefined') return el
 
     const isNotEditable = el.getAttribute('editable') === false
@@ -22,10 +22,15 @@ const Component = {
     }
 
     if (chunk.chunk_type == 'image') {
-      if (chunk.content && transform) {
-        chunk.content = setTransformAttributes(chunk.content, transform)
+      if (dummy) {
+        const svgImage = this.createImagePlaceholder(el)
+        el = svgImage
+      } else {
+        if (chunk.content && transform) {
+          chunk.content = setTransformAttributes(chunk.content, transform)
+        }
+        el.src = chunk.content
       }
-      el.src = chunk.content || "https://editmode.com/upload.png"
 
     } else {
       el.innerHTML = parseVariable(chunk.content, variables)
@@ -34,16 +39,19 @@ const Component = {
     return el
   },
 
-  renderCollection: function(el, collectionItems, limit = null) {
+  renderCollection: function(el, collectionItems, limit = null, tags = []) {
     const collectionContainer = document.createElement('div')
     const containerClass = el.getAttribute('class') || ""
 
     // Limit item display
     if (limit) collectionItems = collectionItems.splice(0, limit)
+    // Add tags in dataset
+    if (tags.length) collectionContainer.dataset.chunkTags = tags.join("|")
 
     if (collectionItems.length) {
       collectionContainer.setAttribute('class', `${containerClass} chunks-collection-wrapper`)
       collectionContainer.dataset.chunkCollectionIdentifier = collectionItems[0].collection.identifier
+      console.log(tags)
 
       collectionItems.forEach(collectionItem => {
         const itemWrapper = this.createCollectionItem(el, collectionItem)
@@ -65,17 +73,27 @@ const Component = {
     }
   },
 
+  createImagePlaceholder: function(originalEl) {
+    const svgImage = document.createElement('svg')
+    svgImage.classList = originalEl.classList.value
+    svgImage.setAttribute('fill', 'currentColor')
+    svgImage.setAttribute('viewBox', "0 0 20 20")
+    svgImage.innerHTML = '<path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>'
+    Object.assign(svgImage.dataset, originalEl.dataset);
+    return svgImage
+  },
+
   createCollectionItem: function(el, item, dummy = false) {
     let template = el.innerHTML
     const fields = el.content.querySelectorAll("[field-id]")
-    const itemWrapper = document.createElement('div')
+    let itemWrapper = document.createElement('div')
     const itemClass = el.getAttribute('itemClass') || ""
 
     itemWrapper.setAttribute('class', itemClass)
     
     if (dummy) {
-      // Info: Line 42
-      itemWrapper.classList.add("chunks-hide")
+      itemWrapper = document.createElement('em-template')
+      // Create Dummy Item for new collection item
       itemWrapper.classList.add("chunks-col-placeholder-wrapper")
       itemWrapper.style.display = "none"
     }else{
