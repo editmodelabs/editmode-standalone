@@ -17,7 +17,7 @@ export async function api(path, config = {}) {
 
     url.pathname = path
 
-    if ( parameters ) {
+    if (parameters) {
         for (let [key, val] of Object.entries(parameters)) {
             if (val) {
                 if (Array.isArray(val)) {
@@ -49,7 +49,7 @@ export const parseVariable = (content, variables) => {
             console.log(error)
         }
 
-        const tokens = (content.match(/\{{(.*?)\}}/g) || []).map(t => t.substr(2, t.length - 4))
+        const tokens = content && (content.match(/\{{(.*?)\}}/g) || []).map(t => t.substr(2, t.length - 4))
 
         if (tokens) {
             tokens.forEach(function (token) {
@@ -101,3 +101,25 @@ export const logger = (message) => {
     // TODO: Add type to change color between warn info and danger
     console.log(`%c ${message}`, 'color: #bada55');
 }
+
+
+export const storeTimedCache = (id, data) => {
+    const expiry = new Date(new Date().setHours(new Date().getHours() + 1)); // Set 1 hour expiration
+    const item = {
+        value: data,
+        expiry: expiry.getTime(),
+    };
+    localStorage.setItem(id, JSON.stringify(item));
+};
+
+export const getTimedCachedData = (id) => {
+    const cachedItem = localStorage.getItem(id);
+    if (!cachedItem) return null;
+    const item = JSON.parse(cachedItem);
+    const now = new Date();
+    if (now.getTime() > item.expiry) {
+        localStorage.removeItem(id);
+        return null;
+    }
+    return item.value;
+};
