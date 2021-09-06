@@ -1,3 +1,15 @@
+# v1.0.10 (Mon Sep 06 2021)
+
+#### ⚠️ Pushed to `master`
+
+- Replace new powered by logo ([@jenvillaganas](https://github.com/jenvillaganas))
+
+#### Authors: 1
+
+- Jen Villaganas  ([@jenvillaganas](https://github.com/jenvillaganas))
+
+---
+
 # v1.0.9 (Mon Sep 06 2021)
 
 #### 🐛 Bug Fix
